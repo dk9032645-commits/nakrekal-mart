@@ -671,6 +671,7 @@
     const phone = document.getElementById('custPhone').value.trim();
     const addr = document.getElementById('custAddr').value.trim();
     if (!name || !phone || !addr) return alert("దయచేసి పేరు, ఫోన్ నంబర్ మరియు అడ్రస్ రాయండి!");
+            if (phone.replace(/\D/g, "").slice(-10).length !== 10) return alert("దయచేసి సరైన 10 అంకెల మొబైల్ నంబర్ ఎంటర్ చేయండి!");
 
     let msg = `🛍️ *NEW ORDER - Nakrekal Mart (NAKREKAL)*
 ━━━━━━━━━━━━━━━━━━
