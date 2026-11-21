@@ -707,7 +707,75 @@ if (p.get("sms")) {
 
   initApp();
 </script>
+
+<style>
+#search-suggestions {
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: #fff; border-radius: 0 0 14px 14px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    z-index: 9999; max-height: 280px; overflow-y: auto;
+    display: none; border: 1px solid #e2e8f0; border-top: none;
+}
+.sug-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px; border-bottom: 1px solid #f1f5f9;
+    cursor: pointer; color: #1e293b; text-align: left;
+}
+.sug-item:hover, .sug-item:active { background: #f8fafc; }
+.sug-item img { width: 38px; height: 38px; object-fit: cover; border-radius: 6px; }
+.sug-info { flex: 1; }
+.sug-name { font-weight: 600; font-size: 14px; }
+.sug-price { font-size: 12px; color: #16a34a; font-weight: 700; }
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const inp = document.querySelector("input[placeholder*=\"Search\"], input[placeholder*=\"వస్తువు\"]");
+    if (!inp) return;
+    inp.parentElement.style.position = "relative";
+    const box = document.createElement("div");
+    box.id = "search-suggestions";
+    inp.parentElement.appendChild(box);
+
+    inp.addEventListener("input", function() {
+        const q = this.value.trim().toLowerCase();
+        box.innerHTML = "";
+        if (!q) { box.style.display = "none"; return; }
+        const cards = document.querySelectorAll(".product-card, .card, [data-name]");
+        let matches = [];
+        cards.forEach(c => {
+            const titleEl = c.querySelector("h3, h4, .title, .product-title, b, strong") || c;
+            const name = (c.getAttribute("data-name") || titleEl.innerText || "").split("\n")[0].trim();
+            const imgEl = c.querySelector("img");
+            const priceMatch = c.innerText.match(/₹\s*\d+/);
+            if (name.toLowerCase().includes(q) && name.length > 1) {
+                matches.push({ name, img: imgEl ? imgEl.src : "", price: priceMatch ? priceMatch[0] : "", card: c });
+            }
+        });
+        if (matches.length === 0) {
+            box.innerHTML = "<div class=\"sug-item\" style=\"color:#64748b\">🔍 \"" + this.value + "\" పేరుతో వస్తువు దొరకలేదు</div>";
+        } else {
+            matches.slice(0, 8).forEach(m => {
+                const div = document.createElement("div");
+                div.className = "sug-item";
+                div.innerHTML = (m.img ? "<img src=\"" + m.img + "\">" : "🔍") +
+                    "<div class=\"sug-info\"><div class=\"sug-name\">" + m.name + "</div>" +
+                    "<div class=\"sug-price\">" + m.price + "</div></div>";
+                div.onclick = () => {
+                    inp.value = m.name;
+                    inp.dispatchEvent(new Event("input"));
+                    box.style.display = "none";
+                    m.card.scrollIntoView({ behavior: "smooth", block: "center" });
+                };
+                box.appendChild(div);
+            });
+        }
+        box.style.display = "block";
+    });
+    document.addEventListener("click", e => { if (!inp.parentElement.contains(e.target)) box.style.display = "none"; });
+});
+</script>
 </body>
+
 </html>
 """
 
