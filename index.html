@@ -322,7 +322,8 @@ if (p.get("sms")) {
             <h2>📩 Send Confirmation SMS</h2>
             <p style="font-size:18px;color:#FACC15;">Customer: +91 ${p.get("sms")}</p>
             <p style="background:#1F2937;padding:15px;border-radius:10px;max-width:400px;">${m}</p>
-            <a href="${smsHref}" style="margin-top:20px;background:#16A34A;color:#fff;padding:18px 36px;border-radius:12px;font-size:20px;font-weight:bold;text-decoration:none;">✅ Open Messages & Send</a>
+            <a href="${smsHref}" onclick="setTimeout(() => { window.location.replace(window.location.pathname); }, 1500)" style="margin-top:20px;background:#16A34A;color:#fff;padding:18px 36px;border-radius:12px;font-size:20px;font-weight:bold;text-decoration:none;">✅ Open Messages & Send</a>
+            <a href="index.html" style="margin-top:16px;color:#9CA3AF;font-size:15px;text-decoration:underline;">🏠 Back to Nakrekal Mart</a>
         </div>`;
     });
 }
