@@ -1,3 +1,49 @@
+
+import os, base64, threading, urllib.request, json as _json
+
+def _sync_github(filepath):
+    token = os.environ.get("GITHUB_TOKEN", "").strip()
+    if not token or not os.path.exists(filepath):
+        return
+    repo = "dk9032645-commits/nakrekal-mart"
+    fname = os.path.basename(filepath)
+    url = f"https://api.github.com/repos/{repo}/contents/{fname}"
+    headers = {
+        "Authorization": f"token {token}",
+        "Accept": "application/vnd.github.v3+json",
+        "User-Agent": "NakrekalMart"
+    }
+    try:
+        sha = None
+        req = urllib.request.Request(url, headers=headers)
+        try:
+            with urllib.request.urlopen(req) as res:
+                sha = _json.loads(res.read().decode()).get("sha")
+        except Exception:
+            pass
+        with open(filepath, "rb") as f:
+            b64 = base64.b64encode(f.read()).decode()
+        payload = {"message": f"Auto-save {fname}", "content": b64}
+        if sha:
+            payload["sha"] = sha
+        put_req = urllib.request.Request(url, data=_json.dumps(payload).encode(), headers=headers, method="PUT")
+        urllib.request.urlopen(put_req)
+    except Exception as e:
+        print("GitHub Sync Error:", e)
+
+_orig_json_dump = _json.dump
+def _patched_json_dump(obj, fp, *args, **kwargs):
+    res = _orig_json_dump(obj, fp, *args, **kwargs)
+    try:
+        fp.flush()
+        name = getattr(fp, "name", "")
+        if any(k in name for k in ("products.json", "categories.json", "banners.json")):
+            threading.Thread(target=_sync_github, args=(name,), daemon=True).start()
+    except Exception:
+        pass
+    return res
+_json.dump = _patched_json_dump
+
 import os
 import json
 from http.server import HTTPServer, BaseHTTPRequestHandler
