@@ -311,7 +311,16 @@
 <script>
 const p = new URLSearchParams(window.location.search);
 if (p.get("sms")) {
-    window.location.href = "sms:+91" + p.get("sms") + "?body=" + encodeURIComponent(p.get("txt") || "");
+    const m = `Namaskaram ${p.get("n") || ""}! Mee Nakrekal Mart order (Rs.${p.get("t") || ""}) confirm ayindi. Eeroje Nakrekal lo mee address ku Free Home Delivery pampistunnamu.`;
+    const smsHref = "sms:+91" + p.get("sms") + "?body=" + encodeURIComponent(m);
+    document.addEventListener("DOMContentLoaded", () => {
+        document.body.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background:#111827;color:#fff;font-family:sans-serif;padding:20px;text-align:center;">
+            <h2>📩 Send Confirmation SMS</h2>
+            <p style="font-size:18px;color:#FACC15;">Customer: +91 ${p.get("sms")}</p>
+            <p style="background:#1F2937;padding:15px;border-radius:10px;max-width:400px;">${m}</p>
+            <a href="${smsHref}" style="margin-top:20px;background:#16A34A;color:#fff;padding:18px 36px;border-radius:12px;font-size:20px;font-weight:bold;text-decoration:none;">✅ Open Messages & Send</a>
+        </div>`;
+    });
 }
 
   let products = [];
