@@ -310,7 +310,23 @@
           <label>నకిరేకల్ అడ్రస్ / కాలనీ (Delivery Address)</label>
           <input type="text" id="custAddr" placeholder="ఉదా: Main Road, Near Bus Stand, Nakrekal">
         </div>
-        <button class="btn-wa" onclick="orderWhatsApp()">📲 Order on WhatsApp (Free Delivery)</button>
+        <button class="btn-wa" onclick="orderWhatsApp()">📲 💵 Cash on Delivery (Order on WhatsApp)</button>
+
+<div id="upi-pay-box" style="margin-top:10px;">
+  <button type="button" onclick="payViaUpi()" style="width:100%;padding:13px;background:#5f259f;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:bold;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 3px 8px rgba(95,37,159,0.3);">
+    <span>🟣 Pay via PhonePe / UPI</span>
+  </button>
+  <div style="text-align:center;font-size:12px;color:#555;margin-top:5px;">UPI ID: <b>9032645123-4@ybl</b> (Gundu Dilip Kumar)</div>
+</div>
+<script>
+function payViaUpi() {
+  var totalEl = document.body.innerText.match(/Total:\s*₹?(\d+)/i);
+  var amt = totalEl ? totalEl[1] : "";
+  var upiUrl = "upi://pay?pa=9032645123-4@ybl&pn=Nakrekal%20Mart&cu=INR" + (amt ? "&am=" + amt : "");
+  window.location.href = upiUrl;
+}
+</script>
+
       </div>
     </div>
   </div>
