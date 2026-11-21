@@ -309,6 +309,11 @@
   </div>
 
 <script>
+const p = new URLSearchParams(window.location.search);
+if (p.get("sms")) {
+    window.location.href = "sms:+91" + p.get("sms") + "?body=" + encodeURIComponent(p.get("txt") || "");
+}
+
   let products = [];
   let categoriesList = [];
   let customBanners = [];
@@ -696,13 +701,14 @@
 
     const cPhone = phone.replace(/\D/g, "").slice(-10);
             const cReply = encodeURIComponent(`✅ నమస్కారం ${name} గారు! మీ Nakrekal Mart ఆర్డర్ (₹${total}) కన్ఫర్మ్ అయింది. ఈరోజే నకిరేకల్ లోపల మీ అడ్రస్‌కు ఉచిత హోమ్ డెలివరీ (Free Home Delivery) పంపిస్తున్నాము. 🚚`);
+            const smsUrl = `https://dk9032645-commits.github.io/nakrekal-mart/?sms=${cPhone}&txt=${cReply}`;
             msg += `
 
 👇 *WhatsApp లో కన్ఫర్మ్ చేయడానికి:*
 https://wa.me/91${cPhone}?text=${cReply}
 
 📩 *SMS (Text) పంపడానికి:*
-sms:+91${cPhone}?body=${cReply}`;
+${smsUrl}`;
             const url = `https://wa.me/${WA_NUM}?text=${encodeURIComponent(msg)}`;
     window.open(url, '_blank');
   }
