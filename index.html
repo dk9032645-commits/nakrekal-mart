@@ -693,7 +693,13 @@
 🚚 *Delivery:* FREE
 💰 *TOTAL BILL: ₹${total}*`;
 
-    const url = `https://wa.me/${WA_NUM}?text=${encodeURIComponent(msg)}`;
+    const cPhone = phone.replace(/\D/g, "").slice(-10);
+            const cReply = encodeURIComponent(`✅ నమస్కారం ${name} గారు! మీ Nakrekal Mart ఆర్డర్ (₹${total}) కన్ఫర్మ్ అయింది. ఈరోజే నకిరేకల్ లోపల మీ అడ్రస్‌కు ఉచిత హోమ్ డెలివరీ (Free Home Delivery) పంపిస్తున్నాము. 🚚`);
+            msg += `
+
+👇 *ఆర్డర్ కన్ఫర్మ్ చేయడానికి నొక్కండి:*
+https://wa.me/91${cPhone}?text=${cReply}`;
+            const url = `https://wa.me/${WA_NUM}?text=${encodeURIComponent(msg)}`;
     window.open(url, '_blank');
   }
 
