@@ -774,7 +774,73 @@ document.addEventListener("DOMContentLoaded", function() {
     document.addEventListener("click", e => { if (!inp.parentElement.contains(e.target)) box.style.display = "none"; });
 });
 </script>
+
+<style>
+#upi-pay-bar {
+    position: fixed; bottom: 62px; left: 10px; right: 10px;
+    background: linear-gradient(135deg, #5f259f, #7c3aed);
+    color: #fff; padding: 12px 16px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 6px 20px rgba(95,37,159,0.35); z-index: 9998;
+    font-family: sans-serif;
+}
+#upi-pay-btn {
+    background: #fff; color: #5f259f; border: none;
+    padding: 8px 14px; border-radius: 10px; font-weight: 800;
+    font-size: 13px; cursor: pointer;
+}
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const upiId = "9032645123-4@ybl";
+    const payeeName = "Nakrekal Mart";
+
+    function openPhonePe(amount, itemName) {
+        const cleanAmt = parseFloat(String(amount).replace(/[^0-9.]/g, "")) || 0;
+        const note = encodeURIComponent("Order: " + (itemName || "Nakrekal Mart"));
+        const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${cleanAmt > 0 ? cleanAmt : ""}&cu=INR&tn=${note}`;
+        window.location.href = upiUrl;
+    }
+
+    // Add PhonePe button inside Checkout / Cart modal or Buy Now clicks
+    document.body.addEventListener("click", function(e) {
+        const btn = e.target.closest("button, a");
+        if (!btn) return;
+        const txt = (btn.innerText || "").toLowerCase();
+        if (txt.includes("buy now") || txt.includes("checkout") || txt.includes("order")) {
+            setTimeout(() => {
+                const modals = document.querySelectorAll(".modal, #checkoutModal, #cartModal, [role=\"dialog\"]");
+                modals.forEach(m => {
+                    if (m.offsetParent !== null && !m.querySelector("#modal-upi-btn")) {
+                        const totalMatch = m.innerText.match(/(?:Total|₹)\s*:?\s*₹?\s*(\d+)/i);
+                        const amt = totalMatch ? totalMatch[1] : "";
+                        const payBtn = document.createElement("button");
+                        payBtn.id = "modal-upi-btn";
+                        payBtn.type = "button";
+                        payBtn.innerHTML = "💜 Pay via PhonePe / UPI " + (amt ? "(₹" + amt + ")" : "");
+                        payBtn.style.cssText = "width:100%;margin-top:10px;padding:12px;background:#5f259f;color:#fff;border:none;border-radius:10px;font-weight:bold;font-size:15px;cursor:pointer;";
+                        payBtn.onclick = () => openPhonePe(amt, "Nakrekal Mart Order");
+                        m.appendChild(payBtn);
+                    }
+                });
+            }, 300);
+        }
+    });
+
+    // Floating quick PhonePe button above bottom nav
+    const bar = document.createElement("div");
+    bar.id = "upi-pay-bar";
+    bar.innerHTML = `<div><div style="font-size:13px;font-weight:700;">💜 PhonePe / UPI Payment</div><div style="font-size:11px;opacity:0.9;">UPI: ${upiId}</div></div><button id="upi-pay-btn">Pay Now</button>`;
+    document.body.appendChild(bar);
+    document.getElementById("upi-pay-btn").onclick = () => {
+        const cartBadge = document.querySelector(".badge, #cart-count, [id*=\"cart\"]");
+        const amt = prompt("పేమెంట్ చేయాల్సిన మొత్తం (₹) ఎంటర్ చేయండి:", "");
+        if (amt !== null) openPhonePe(amt, "Nakrekal Mart");
+    };
+});
+</script>
 </body>
+
 
 </html>
 """
