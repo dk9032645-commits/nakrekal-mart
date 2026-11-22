@@ -79,7 +79,7 @@ if not os.path.exists(BANNER_FILE):
 HTML_TEMPLATE = """<!DOCTYPE html>
 <html lang="te">
 <head>
-    <meta name="google-site-verification" content="6K0XPTYhqZq00a7zYlUqXMfHu2Bya-pfgqLrmjyuojc" />
+    <meta name="google-site-verification" content="5c7j3MHN0RujpM5SKj89e1xbwogDgYVOq6lGbHtXU5A" />
     <title>Nakrekal Mart - Online Shopping Store | Free Home Delivery Nakrekal</title>
     <meta name="description" content="Nakrekal Mart online store - ESSA Banian, ESSA Underwear, and daily essentials with Free Home Delivery in Nakrekal town. Order on WhatsApp.">
     <meta name="keywords" content="Nakrekal Mart, Nakrekal online shopping, Nakrekal home delivery, ESSA banian Nakrekal">
