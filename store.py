@@ -79,6 +79,8 @@ if not os.path.exists(BANNER_FILE):
 HTML_TEMPLATE = """<!DOCTYPE html>
 <html lang="te">
 <head>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23ff6b00'/%3E%3Ctext x='50' y='68' font-size='56' text-anchor='middle'%3E%F0%9F%9B%92%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23ff6b00'/%3E%3Ctext x='50' y='68' font-size='56' text-anchor='middle'%3E%F0%9F%9B%92%3C/text%3E%3C/svg%3E">
     <meta name="google-site-verification" content="5c7j3MHN0RujpM5SKj89e1xbwogDgYVOq6lGbHtXU5A" />
     <title>Nakrekal Mart - Online Shopping Store | Free Home Delivery Nakrekal</title>
     <meta name="description" content="Nakrekal Mart online store - ESSA Banian, ESSA Underwear, and daily essentials with Free Home Delivery in Nakrekal town. Order on WhatsApp.">
