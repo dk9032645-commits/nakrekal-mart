@@ -492,7 +492,7 @@ if (p.get("sms")) {
       totalSlides = 2;
       slidesEl.innerHTML = `
         <div class="slide"><div><h3>🚚 FREE HOME DELIVERY</h3><p>నకిరేకల్ టౌన్ లోపల ఏ వస్తువు అయినా ఉచిత హోమ్ డెలివరీ!</p></div><div style="font-size:34px;">🎁</div></div>
-        <div class="slide" style="background:linear-gradient(135deg, #b71c1c, #f57c00);"><div><h3>🔥 SPECIAL TOWN OFFERS</h3><p>DTH రిమోట్లు, మొబైల్స్ & ఫ్యాషన్ ఐటమ్స్ తక్కువ ధరలకే!</p></div><div style="font-size:34px;">🏷️</div></div>
+        <div class="slide" style="background:linear-gradient(135deg, #b71c1c, #f57c00);"><div><h3>🔥 SPECIAL TOWN OFFERS</h3><p>ఫ్యాషన్ & నిత్యావసర వస్తువులు తక్కువ ధరలకే!</p></div><div style="font-size:34px;">🏷️</div></div>
       `;
     }
     slideIdx = 0;
